@@ -1,0 +1,8 @@
+numpy
+pdfplumber
+nltk
+streamlit
+sentence-transformers
+rank-bm25
+torch
+asyncio

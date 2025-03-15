@@ -1,3 +1,10 @@
+import asyncio
+
+try:
+    asyncio.get_running_loop()
+except RuntimeError:
+    asyncio.set_event_loop(asyncio.new_event_loop())
+
 import os
 import numpy as np
 import pdfplumber
@@ -80,7 +87,7 @@ def calculate_confidence(query, bm25, bm25_corpus, embeddings):
     if np.max(similarities) > 0:
         top_embedding_scores /= np.max(similarities)
     confidence_score = (0.7 * np.mean(top_bm25_scores)) + (0.3 * np.mean(top_embedding_scores))
-    return "High Confidence" if confidence_score > 0.7 else "Low Confidence"
+    return f"High Confidence: {confidence_score:.2f}" if confidence_score > 0.9 else f"Low Confidence: {confidence_score:.2f}"
 
 # Capture print statements inside Streamlit
 class StreamlitLogger(io.StringIO):
@@ -150,5 +157,5 @@ def main():
         st.markdown("### 📜 Debug Logs")
         st.text_area("Live Logs", value=st.session_state["log"], height=300)
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()
