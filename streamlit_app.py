@@ -1,3 +1,18 @@
+import nltk
+import ssl
+
+# Fix SSL issues (optional, for some environments)
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
+# Download 'punkt' without interaction
+nltk.download('punkt_tab', quiet=True)
+
+
 import asyncio
 
 try:
